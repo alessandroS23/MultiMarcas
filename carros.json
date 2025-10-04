@@ -19,25 +19,6 @@
     ]
   },
   {
-    "titulo": "Toyota Corolla 2024",
-    "descricao": "Sedã médio com desempenho confiável e conforto para toda família.",
-    "area": "Corolla XEI",
-    "tempo": "2024",
-    "autor": "AutoPremium",
-    "preco": "R$ 119.500",
-    "imagens": [
-      "https://media.ed.edmunds-media.com/toyota/corolla/2023/oem/2023_toyota_corolla_sedan_xse_fq_oem_1_600.jpg",
-      "https://image1.mobiauto.com.br/images/api/images/v1.0/447022922/transform/fl_progressive,f_jpeg,q_70,w_720,h_400"
-    ],
-    "servicos": [
-      "🔹 Faróis Full LED",
-      "🔹 Sistema de som premium JBL",
-      "🔹 Pacote de segurança Toyota Safety Sense",
-      "🔹 Câmera 360º",
-      "🔹 Volante multifuncional em couro"
-    ]
-  },
-  {
     "titulo": "Toyota Etios 2020",
     "descricao": "Sedã médio com desempenho confiável e conforto para toda família.",
     "area": "Corolla XEI",
