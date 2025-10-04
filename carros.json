@@ -36,6 +36,25 @@
       "🔹 Câmera 360º",
       "🔹 Volante multifuncional em couro"
     ]
-  }
+  },
+{
+  "titulo": "Honda Civic 2023",
+  "descricao": "Sedã esportivo com tecnologia avançada e conforto premium.",
+  "area": "Civic EXL",
+  "tempo": "2023",
+  "autor": "AutoPremium",
+  "preco": "R$ 79.900",
+  "imagens": [
+    "https://linkdaimagem1.jpg",
+    "https://linkdaimagem2.jpg"
+  ],
+  "servicos": [
+    "🔹 Teto solar",
+    "🔹 Central multimídia 10''",
+    "🔹 Bancos em couro",
+    "🔹 Assistência de estacionamento",
+    "🔹 Apple CarPlay / Android Auto"
+  ]
+}
   
 ]
