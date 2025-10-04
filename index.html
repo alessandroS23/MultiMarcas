@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfólio - Agência de Carros</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="titulo">Portfólio - Agência de Carros</h1>
+
+  <!-- LISTA DE CARROS -->
+  <div id="portfolio" class="portfolio-container"></div>
+
+  <!-- DETALHES DO CARRO -->
+  <div id="detalhes" class="projeto-container">
+    <div class="carousel">
+      <div class="carousel-images" id="carouselImages"></div>
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+
+    <div class="descricao">
+      <h2 id="projetoTitulo"></h2>
+      <p id="projetoDescricao"></p>
+      <div class="preco" id="projetoPreco"></div>
+      <ul id="projetoServicos"></ul>
+
+      <div class="detalhes">
+        <div class="info"><b>Modelo:</b> <span id="projetoArea"></span></div>
+        <div class="info"><b>Ano:</b> <span id="projetoTempo"></span></div>
+        <div class="info"><b>Agência:</b> <span id="projetoAutor"></span></div>
+      </div>
+
+      <button class="btn-voltar" onclick="voltar()">← Voltar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
