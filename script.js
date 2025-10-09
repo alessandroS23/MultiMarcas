@@ -1,17 +1,17 @@
 let projetos = [];
-fetch('carros.json')
-  .then(res => res.json())
-  .then(data => {
-    projetos = data;
-    renderizarPortfolio();
-  })
-  .catch(err => console.error("Erro ao carregar carros:", err));
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch('carros.json')
+    .then(res => res.json())
+    .then(data => {
+      projetos = data;
+      renderizarPortfolio();
+    })
+    .catch(err => console.error("Erro ao carregar carros:", err));
+});
 
 const portfolioContainer = document.getElementById("portfolio");
 const detalhes = document.getElementById("detalhes");
-
-// Detecta se é mobile
-const isMobile = window.innerWidth <= 768;
 
 function renderizarPortfolio() {
   portfolioContainer.innerHTML = "";
@@ -23,21 +23,24 @@ function renderizarPortfolio() {
       <h3>${proj.titulo}</h3>
       <div class="preco">${proj.preco}</div>
     `;
-    card.onclick = () => abrirProjeto(i);
+    
+    // Usa addEventListener para garantir que funcione em mobile também
+    card.addEventListener("click", () => abrirProjeto(i));
     portfolioContainer.appendChild(card);
   });
 }
 
 function abrirProjeto(i) {
   const p = projetos[i];
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-  // Se for mobile, redireciona para página de detalhes
   if (isMobile) {
-    window.location.href = `detalhes.html?id=${i}`;
+    // Força redirecionamento real de página no mobile
+    window.location.assign(`detalhes.html?id=${i}`);
     return;
   }
 
-  // Modo desktop → carrega dentro da mesma página
+  // --- Versão desktop ---
   document.getElementById("projetoTitulo").textContent = p.titulo;
   document.getElementById("projetoDescricao").textContent = p.descricao;
   document.getElementById("projetoPreco").textContent = p.preco;
@@ -73,18 +76,26 @@ function voltar() {
 
 function iniciarCarrossel() {
   const images = document.querySelector(".carousel-images");
+  if (!images) return;
   const imgCount = images.children.length;
   let index = 0;
+
   function showImage(i) {
     images.style.transform = `translateX(${-i * 100}%)`;
   }
-  document.querySelector(".prev").onclick = () => {
-    index = (index > 0) ? index - 1 : imgCount - 1;
-    showImage(index);
-  };
-  document.querySelector(".next").onclick = () => {
-    index = (index < imgCount - 1) ? index + 1 : 0;
-    showImage(index);
-  };
+
+  const prev = document.querySelector(".prev");
+  const next = document.querySelector(".next");
+  if (prev && next) {
+    prev.onclick = () => {
+      index = (index > 0) ? index - 1 : imgCount - 1;
+      showImage(index);
+    };
+    next.onclick = () => {
+      index = (index < imgCount - 1) ? index + 1 : 0;
+      showImage(index);
+    };
+  }
+
   showImage(0);
 }
