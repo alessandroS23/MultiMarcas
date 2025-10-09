@@ -6,8 +6,13 @@ fetch('carros.json')
     renderizarPortfolio();
   })
   .catch(err => console.error("Erro ao carregar carros:", err));
+
 const portfolioContainer = document.getElementById("portfolio");
 const detalhes = document.getElementById("detalhes");
+
+// Detecta se é mobile
+const isMobile = window.innerWidth <= 768;
+
 function renderizarPortfolio() {
   portfolioContainer.innerHTML = "";
   projetos.forEach((proj, i) => {
@@ -22,14 +27,24 @@ function renderizarPortfolio() {
     portfolioContainer.appendChild(card);
   });
 }
+
 function abrirProjeto(i) {
   const p = projetos[i];
+
+  // Se for mobile, redireciona para página de detalhes
+  if (isMobile) {
+    window.location.href = `detalhes.html?id=${i}`;
+    return;
+  }
+
+  // Modo desktop → carrega dentro da mesma página
   document.getElementById("projetoTitulo").textContent = p.titulo;
   document.getElementById("projetoDescricao").textContent = p.descricao;
   document.getElementById("projetoPreco").textContent = p.preco;
   document.getElementById("projetoArea").textContent = p.area;
   document.getElementById("projetoTempo").textContent = p.tempo;
   document.getElementById("projetoAutor").textContent = p.autor;
+
   const lista = document.getElementById("projetoServicos");
   lista.innerHTML = "";
   p.servicos.forEach(s => {
@@ -37,6 +52,7 @@ function abrirProjeto(i) {
     li.textContent = s;
     lista.appendChild(li);
   });
+
   const imagens = document.getElementById("carouselImages");
   imagens.innerHTML = "";
   p.imagens.forEach(img => {
@@ -44,14 +60,17 @@ function abrirProjeto(i) {
     el.src = img;
     imagens.appendChild(el);
   });
+
   portfolioContainer.style.display = "none";
   detalhes.style.display = "flex";
   iniciarCarrossel();
 }
+
 function voltar() {
   detalhes.style.display = "none";
   portfolioContainer.style.display = "flex";
 }
+
 function iniciarCarrossel() {
   const images = document.querySelector(".carousel-images");
   const imgCount = images.children.length;
