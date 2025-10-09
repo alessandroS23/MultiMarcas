@@ -1,153 +1,71 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0; padding: 0;
-  background: #0b0f14;
-  color: #eaf2ff;
+let projetos = [];
+fetch('carros.json')
+  .then(res => res.json())
+  .then(data => {
+    projetos = data;
+    renderizarPortfolio();
+  })
+  .catch(err => console.error("Erro ao carregar carros:", err));
+const portfolioContainer = document.getElementById("portfolio");
+const detalhes = document.getElementById("detalhes");
+function renderizarPortfolio() {
+  portfolioContainer.innerHTML = "";
+  projetos.forEach((proj, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${proj.imagens[0]}" alt="${proj.titulo}">
+      <h3>${proj.titulo}</h3>
+      <div class="preco">${proj.preco}</div>
+    `;
+    card.onclick = () => abrirProjeto(i);
+    portfolioContainer.appendChild(card);
+  });
 }
-
-/* TÍTULO */
-h1.titulo {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 2.2rem;
+function abrirProjeto(i) {
+  const p = projetos[i];
+  document.getElementById("projetoTitulo").textContent = p.titulo;
+  document.getElementById("projetoDescricao").textContent = p.descricao;
+  document.getElementById("projetoPreco").textContent = p.preco;
+  document.getElementById("projetoArea").textContent = p.area;
+  document.getElementById("projetoTempo").textContent = p.tempo;
+  document.getElementById("projetoAutor").textContent = p.autor;
+  const lista = document.getElementById("projetoServicos");
+  lista.innerHTML = "";
+  p.servicos.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = s;
+    lista.appendChild(li);
+  });
+  const imagens = document.getElementById("carouselImages");
+  imagens.innerHTML = "";
+  p.imagens.forEach(img => {
+    const el = document.createElement("img");
+    el.src = img;
+    imagens.appendChild(el);
+  });
+  portfolioContainer.style.display = "none";
+  detalhes.style.display = "flex";
+  iniciarCarrossel();
 }
-
-/* CONTAINER PRINCIPAL */
-.portfolio-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+function voltar() {
+  detalhes.style.display = "none";
+  portfolioContainer.style.display = "flex";
 }
-
-/* CARD */
-.card {
-  background: #111824;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.45);
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  border: 1px solid rgba(255,255,255,.06);
-  overflow: hidden;
-}
-.card:hover { transform: scale(1.05); }
-
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px 12px 0 0;
-}
-
-/* PREÇO */
-.card h3 { margin: 10px 0; }
-.preco {
-  color: #00e6a8;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-/* CONTEÚDO DO PROJETO */
-.projeto-container {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  padding: 20px;
-}
-
-/* CARROSSEL */
-.carousel {
-  position: relative;
-  max-width: 100%;
-  overflow: hidden;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.07);
-}
-.carousel-images {
-  display: flex;
-  transition: transform 0.3s ease;
-}
-.carousel-images img {
-  width: 100%;
-  height: auto;
-  max-width: 600px;
-  object-fit: contain;
-}
-.prev, .next {
-  position: absolute;
-  top: 50%;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  transform: translateY(-50%);
-  border-radius: 8px;
-}
-.prev { left: 10px; }
-.next { right: 10px; }
-
-/* DESCRIÇÃO */
-.descricao {
-  width: 100%;
-  max-width: 600px;
-  margin-top: 20px;
-  text-align: left;
-}
-.descricao h2 { font-size: 1.8rem; margin-bottom: 10px; }
-.descricao p { margin-bottom: 12px; }
-.descricao ul { padding-left: 20px; margin-bottom: 12px; }
-.descricao li { margin-bottom: 6px; }
-
-/* DETALHES */
-.detalhes {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-.info {
-  background: #111824;
-  padding: 15px;
-  border-radius: 12px;
-  flex: 1 1 200px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.info b { display: block; margin-bottom: 6px; }
-
-/* BOTÃO VOLTAR */
-.btn-voltar {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #00e6a8;
-  color: #001314;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,230,168,.25);
-  transition: transform 0.2s;
-}
-.btn-voltar:hover { transform: scale(1.05); }
-
-/* RESPONSIVIDADE */
-@media (max-width: 900px) {
-  .descricao h2 { font-size: 1.5rem; }
-}
-
-@media (max-width: 550px) {
-  .card { max-width: 100%; }
-  .descricao { text-align: center; }
-  .detalhes { flex-direction: column; }
-  .carousel-images img { width: 100%; }
+function iniciarCarrossel() {
+  const images = document.querySelector(".carousel-images");
+  const imgCount = images.children.length;
+  let index = 0;
+  function showImage(i) {
+    images.style.transform = `translateX(${-i * 100}%)`;
+  }
+  document.querySelector(".prev").onclick = () => {
+    index = (index > 0) ? index - 1 : imgCount - 1;
+    showImage(index);
+  };
+  document.querySelector(".next").onclick = () => {
+    index = (index < imgCount - 1) ? index + 1 : 0;
+    showImage(index);
+  };
+  showImage(0);
 }
